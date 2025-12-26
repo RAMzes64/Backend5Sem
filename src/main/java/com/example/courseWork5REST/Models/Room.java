@@ -26,11 +26,7 @@ public class Room {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<Image> images = new ArrayList<>();
-
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<Order> orders = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

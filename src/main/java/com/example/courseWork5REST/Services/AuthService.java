@@ -65,6 +65,15 @@ public class AuthService {
 
         throw new UsernameNotFoundException("Пользователь не найден " + request.getLogin());
     }
+
+    public boolean matchPasswords(String requestPassword, String currentPassword){
+        return passwordEncoder.matches(requestPassword, currentPassword);
+    }
+
+    public void changePassword(Client client, String newPassword){
+        client.setPassword(passwordEncoder.encode(newPassword));
+        clientRepo.save(client);
+    }
 }
 
 

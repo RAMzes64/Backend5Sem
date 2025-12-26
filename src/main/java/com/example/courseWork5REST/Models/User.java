@@ -24,7 +24,7 @@ public abstract class User implements UserDetails {
     private String password;
 
     @Override
-    public @Nullable String getPassword() {
+    public String getPassword() {
         return password;
     }
 

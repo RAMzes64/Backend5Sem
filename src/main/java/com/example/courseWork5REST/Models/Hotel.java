@@ -2,9 +2,13 @@ package com.example.courseWork5REST.Models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -22,10 +26,19 @@ public class Hotel {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
+    private Integer houseNumber;
+
+    @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false, columnDefinition = "DECIMAL(10,2) CHECK (rating > 0)")
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(columnDefinition = "DECIMAL(10,2) CHECK (rating > 0)")
     private BigDecimal rating;
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
@@ -35,4 +48,9 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Staff> staff = new ArrayList<>();
+
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(nullable = false, columnDefinition = "jsonb")
+    private Map<String, String> img;
 }

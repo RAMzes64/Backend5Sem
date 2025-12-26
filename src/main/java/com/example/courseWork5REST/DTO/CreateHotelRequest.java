@@ -2,24 +2,20 @@ package com.example.courseWork5REST.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.List;
 import java.util.Map;
 
-@Data
-@Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
-public class HotelResponse {
-    private Integer id;
+@Getter
+@Setter
+@Builder
+public class CreateHotelRequest {
     private String name;
     private String address;
+    private Integer houseNumber;
     private String city;
     private String description;
-    private Integer houseNumber;
-    private BigDecimal rating;
     private Map<String, String> img;
 }
