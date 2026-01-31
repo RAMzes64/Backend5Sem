@@ -1,8 +1,10 @@
 package com.example.courseWork5REST.Controllers;
 
+import com.example.courseWork5REST.DTO.CreateStaffRequest;
 import com.example.courseWork5REST.DTO.AuthRequest;
 import com.example.courseWork5REST.DTO.ClientRegistrationRequest;
 import com.example.courseWork5REST.Services.AuthService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,4 +37,6 @@ public class AuthController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+
 }

@@ -2,12 +2,11 @@ package com.example.courseWork5REST.Models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Check;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -26,7 +25,8 @@ public class RoomType {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false, columnDefinition = "DECIMAL(10,2) CHECK (price > 0)")
+    @Column(nullable = false, precision = 10, scale = 2)
+    @Check(constraints = "price > 0")
     private BigDecimal price;
 
     @Column(nullable = false)

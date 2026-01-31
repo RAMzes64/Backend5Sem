@@ -28,7 +28,7 @@ public class Staff extends User{
     private Date birthDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id", nullable = false)
+    @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
     @ManyToOne(fetch = FetchType.LAZY)

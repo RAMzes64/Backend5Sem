@@ -1,6 +1,7 @@
 package com.example.courseWork5REST.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -38,7 +39,8 @@ public class Hotel {
     @Column(nullable = false)
     private String description;
 
-    @Column(columnDefinition = "DECIMAL(10,2) CHECK (rating > 0)")
+    @Column(precision = 10, scale = 2, nullable = false)
+    @DecimalMin(value = "0.01", inclusive = true, message = "Rating must be greater than 0")
     private BigDecimal rating;
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY)

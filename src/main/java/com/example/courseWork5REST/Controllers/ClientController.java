@@ -57,4 +57,9 @@ public class ClientController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/all")
+    public ResponseEntity getAll(){
+        return ResponseEntity.ok(clientService.getAll());
+    }
 }

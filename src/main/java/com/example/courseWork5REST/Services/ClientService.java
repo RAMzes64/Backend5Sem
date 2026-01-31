@@ -13,6 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class ClientService {
@@ -60,5 +63,17 @@ public class ClientService {
             return clientRepo.findByLogin(auth.getName())
                     .orElseThrow(() -> new EntityNotFoundException("Client is not found"));
         return null;
+    }
+
+    public List<ClientResponse> getAll(){
+        return clientRepo.findAll().stream()
+                .map(
+                        (client) -> ClientResponse.builder()
+                                .bookings(client.getBookings())
+                                .email(client.getEmail())
+                                .login(client.getEmail())
+                                .build()
+                )
+                .collect(Collectors.toList());
     }
 }

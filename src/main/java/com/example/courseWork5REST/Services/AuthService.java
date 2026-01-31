@@ -1,12 +1,18 @@
 package com.example.courseWork5REST.Services;
 
+import com.example.courseWork5REST.DTO.CreateStaffRequest;
 import com.example.courseWork5REST.DTO.AuthRequest;
 import com.example.courseWork5REST.DTO.AuthResponse;
 import com.example.courseWork5REST.DTO.ClientRegistrationRequest;
 import com.example.courseWork5REST.Models.Client;
+import com.example.courseWork5REST.Models.Hotel;
+import com.example.courseWork5REST.Models.Role;
 import com.example.courseWork5REST.Models.Staff;
 import com.example.courseWork5REST.Repositories.ClientRepo;
+import com.example.courseWork5REST.Repositories.HotelRepo;
+import com.example.courseWork5REST.Repositories.RoleRepo;
 import com.example.courseWork5REST.Repositories.StaffRepo;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,7 +46,10 @@ public class AuthService {
         client.setPassword(passwordEncoder.encode(request.getPassword()));
         clientRepo.save(client);
 
-        return AuthResponse.builder().token(jwtService.generateToken(client)).build();
+        return AuthResponse.builder()
+                .token(jwtService.generateToken(client))
+                .role("CLIENT")
+                .build();
     }
 
     public AuthResponse authenticate(
@@ -56,12 +65,19 @@ public class AuthService {
         Optional<Staff> staff = staffRepo.findByLogin(request.getLogin());
 
         if (staff.isPresent())
-            return AuthResponse.builder().token(jwtService.generateToken(staff.get())).build();
+            return AuthResponse.builder()
+                    .token(jwtService.generateToken(staff.get()))
+                    .role(staff.get().getRole().getName())
+                    .build();
 
         Optional<Client> client = clientRepo.findByLogin(request.getLogin());
-        if (client.isPresent()){
-            return AuthResponse.builder().token(jwtService.generateToken(client.get())).build();
-        }
+        if (client.isPresent())
+            return AuthResponse.builder()
+                    .token(jwtService.generateToken(client.get()))
+                    .role("CLIENT")
+                    .build();
+
+
 
         throw new UsernameNotFoundException("Пользователь не найден " + request.getLogin());
     }
